@@ -146,5 +146,6 @@
          by the client-id, e.g. "android-google". -->
     <string name="default_browser_url" translatable="false">
         http://www.google.com/m?client=ms-{CID}&amp;source=android-home-hotseat</string>
-
+    <!-- String for drop to uninstall feature -->
+    <string name="drop_to_uninstall">Drop to Unistall</string> 
 </resources>
