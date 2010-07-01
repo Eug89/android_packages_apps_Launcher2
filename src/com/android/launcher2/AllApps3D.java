@@ -140,10 +140,10 @@ public class AllApps3D extends RSSurfaceView
         public static final int ALLOC_LABEL_IDS = 4;
         public static final int ALLOC_VP_CONSTANTS = 5;
 
-        public static final int COLUMNS_PER_PAGE_PORTRAIT = 4;
+        public static final int COLUMNS_PER_PAGE_PORTRAIT = 5;
         public static final int ROWS_PER_PAGE_PORTRAIT = 4;
 
-        public static final int COLUMNS_PER_PAGE_LANDSCAPE = 6;
+        public static final int COLUMNS_PER_PAGE_LANDSCAPE = 7;
         public static final int ROWS_PER_PAGE_LANDSCAPE = 3;
 
         public static final int ICON_WIDTH_PX = 64;
@@ -523,27 +523,28 @@ public class AllApps3D extends RSSurfaceView
         int[] viewPos = new int[2];
         getLocationOnScreen(viewPos);
 
-        mTouchXBorders = new int[mColumnsPerPage + 1];
-        mTouchYBorders = new int[mRowsPerPage + 1];
+        mTouchXBorders = new int[7 + 1];
+        mTouchYBorders = new int[mRowsPerPage + 2];
 
         // TODO: Put this in a config file/define
         int cellHeight = 145;//iconsSize / Defines.ROWS_PER_PAGE_PORTRAIT;
+        int cellWidth = width/mColumnsPerPage;
         if (!isPortrait) cellHeight -= 12;
         int centerY = (int) (height * (isPortrait ? 0.5f : 0.47f));
         if (!isPortrait) centerY += cellHeight / 2;
         int half = (int) Math.floor((mRowsPerPage + 1) / 2);
         int end = mTouchYBorders.length - (half + 1);
 
-        for (int i = -half; i <= end; i++) {
-            mTouchYBorders[i + half] = centerY + (i * cellHeight) - viewPos[1];
+        for (int i = 0; i < mRowsPerPage+2; i++) {
+            mTouchYBorders[i] = i * cellHeight;
         }
 
         int x = 0;
         // TODO: Put this in a config file/define
         int columnWidth = 120;
         for (int i = 0; i < mColumnsPerPage + 1; i++) {
-            mTouchXBorders[i] = x - viewPos[0];
-            x += columnWidth;
+            mTouchXBorders[i] = i*cellWidth;
+            
         }
     }
 
@@ -553,7 +554,7 @@ public class AllApps3D extends RSSurfaceView
         int oldY = y;
 
         // Adjust for scroll position if not zero.
-        y += (pos - ((int)pos)) * (mTouchYBorders[1] - mTouchYBorders[0]);
+        //y += (pos - ((int)pos)) * (mTouchYBorders[1] - mTouchYBorders[0]);
 
         int col = -1;
         int row = -1;
@@ -565,7 +566,7 @@ public class AllApps3D extends RSSurfaceView
             }
         }
         final int rowsCount = mRowsPerPage;
-        for (int i=0; i< rowsCount; i++) {
+        for (int i=0; i< rowsCount+1; i++) {
             if (y >= mTouchYBorders[i] && y < mTouchYBorders[i+1]) {
                 row = i;
                 break;
@@ -576,7 +577,7 @@ public class AllApps3D extends RSSurfaceView
             return -1;
         }
 
-        int index = (((int) pos) * columnsCount) + (row * columnsCount) + col;
+        int index = ((row + (int)pos) * mColumnsPerPage) + col;
 
         if (index >= mAllAppsList.size()) {
             return -1;
