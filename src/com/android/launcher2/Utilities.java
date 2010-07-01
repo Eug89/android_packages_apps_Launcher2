@@ -276,8 +276,8 @@ final class Utilities {
             final float scale = metrics.density;
             mDensity = metrics.densityDpi;
 
-            final float paddingLeft = 2.0f * scale;
-            final float paddingRight = 2.0f * scale;
+            final float paddingLeft = 9.0f * scale;
+            final float paddingRight = 9.0f * scale;
             final float cellWidth = resources.getDimension(R.dimen.title_texture_width);
 
             RectF bubbleRect = mBubbleRect;
