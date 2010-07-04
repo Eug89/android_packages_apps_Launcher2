@@ -138,7 +138,7 @@ void setZoom() {
 
 void fling() {
     g_LastTouchDown = 0;
-    g_PosVelocity = -state->flingVelocity * 5;
+    g_PosVelocity = -state->flingVelocity * 7;
     float av = fabsf(g_PosVelocity);
     float minVel = 7.5f;
 
@@ -291,8 +291,8 @@ void drawFrontGrid(float rowOffset, float p)
     float h = getHeight();
     float w = getWidth();
     float colWidth = w/colCount;
-    float rowHeight = colWidth + 25.f;
-    float yoff = 0.5f * h + 217.5f;
+    float rowHeight = colWidth + 20.f;
+    float yoff = 0.5f * h + 1.5f * rowHeight*40/31;
     float rowFrac = rowOffset - intRowOffset;
     
     if (w > h) {
